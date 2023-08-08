@@ -4,11 +4,14 @@ description: Learn best practices for mitigating potential harm to people—espe
 author: nhu-do-1
 ms.author: nhudo
 ms.service: machine-learning
+ms.reviewer: lagayhar
 ms.topic: conceptual 
-ms.date: 05/05/2022 
+ms.date: 11/04/2022
 ms.custom: responsible-ml 
 ---
 # What is "human data" and why is it important to source responsibly?
+
+[!INCLUDE [SDK/cli v2](includes/machine-learning-dev-v2.md)]
 
 Human data is data collected directly from, or about, people. Human data may include personal data such as names, age, images, or voice clips and sensitive data such as genetic data, biometric data, gender identity, religious beliefs, or political affiliations. 
 
@@ -121,11 +124,11 @@ We suggest the following best practices for manually collecting human data direc
 
 :::row:::
     :::column span="":::
-        **Communicate expectations clearly in the Statement of Work (SOW) with suppliers.**
+        **Communicate expectations clearly in the Statement of Work (SOW) (contracts or agreements) with suppliers.**
     :::column-end:::
 
     :::column span="":::
-        - An SOW which lacks requirements for responsible data collection work may result in low-quality or poorly collected data.     
+        - A contract which lacks requirements for responsible data collection work may result in low-quality or poorly collected data.     
     :::column-end:::
 
 :::row-end:::
@@ -162,12 +165,15 @@ We suggest the following best practices for manually collecting human data direc
 >[!NOTE]
 >This article focuses on recommendations for human data, including personal data and sensitive data such as biometric data, health data, racial or ethnic data, data collected manually from the general public or company employees, as well as metadata relating to human characteristics, such as age, ancestry, and gender identity, that may be created via annotation or labeling. 
 
+[Download the full recommendations here](https://bit.ly/3FK8m8A)
+
+
 
 ## Best practices for collecting age, ancestry, and gender identity
 
 In order for AI systems to work well for everyone, the datasets used for training and evaluation should reflect the diversity of people who will use or be affected by those systems. In many cases, age, ancestry, and gender identity can help approximate the range of factors that might affect how well a product performs for a variety of people; however, collecting this information requires special consideration.
 
-If you do collect this data, always let data contributors self-identify (choose their own responses) instead of having data collectors make assumptions, which might be incorrect. Also include a “prefer not to answer” option for each question. These practices will show respect for the data contributors and yield more balanced and higher-quality data. 
+If you do collect this data, always let data contributors self-identify (choose their own responses) instead of having data collectors make assumptions, which might be incorrect. Also include a "prefer not to answer" option for each question. These practices will show respect for the data contributors and yield more balanced and higher-quality data. 
  
 These best practices have been developed based on three years of research with intended stakeholders and collaboration with many teams at Microsoft: [fairness and inclusiveness working groups](https://www.microsoft.com/ai/our-approach?activetab=pivot1:primaryr5), [Global Diversity & Inclusion](https://www.microsoft.com/diversity/default.aspx), [Global Readiness](https://www.microsoft.com/security/blog/2014/09/29/microsoft-global-readiness-diverse-cultures-multiple-languages-one-world/), [Office of Responsible AI](https://www.microsoft.com/ai/responsible-ai?activetab=pivot1:primaryr6), and others.   
 
@@ -221,6 +227,7 @@ To enable people to self-identify, consider using the following survey questions
 >[!CAUTION] 
 >In some parts of the world, there are laws that criminalize specific gender categories, so it may be dangerous for data contributors to answer this question honestly. Always give people a way to opt out. And work with regional experts and attorneys to conduct a careful review of the laws and cultural norms of each place where you plan to collect data, and if needed, avoid asking this question entirely. 
 
+[Download the full guidance here.](https://bit.ly/3woCOAz)
 
 ## Next steps
 For more information on how to work with your data: 
@@ -228,7 +235,6 @@ For more information on how to work with your data:
 - [Secure data access in Azure Machine Learning](concept-data.md)
 - [Data ingestion options for Azure Machine Learning workflows](concept-data-ingestion.md)
 - [Optimize data processing with Azure Machine Learning](concept-optimize-data-processing.md)
-- [Use differential privacy in Azure Machine Learning](how-to-differential-privacy.md)
 
 Follow these how-to guides to work with your data after you've collected it:
 

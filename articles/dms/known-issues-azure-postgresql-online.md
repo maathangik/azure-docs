@@ -2,16 +2,15 @@
 title: "Known issues: Online migrations from PostgreSQL to Azure Database for PostgreSQL"
 titleSuffix: Azure Database Migration Service
 description: Learn about known issues and migration limitations with online migrations from PostgreSQL to Azure Database for PostgreSQL using the Azure Database Migration Service.
-services: database-migration
-author: rothja
-ms.author: jroth
-manager: craigg
+author: apduvuri
+ms.author: adityaduvuri
 ms.reviewer: craigg
-ms.service: dms
-ms.workload: data-services
-ms.custom: [seo-lt-2019, seo-dt-2019]
-ms.topic: troubleshooting
 ms.date: 02/20/2020
+ms.service: dms
+ms.topic: troubleshooting
+ms.custom:
+  - seo-lt-2019
+  - seo-dt-2019
 ---
 
 # Known issues/limitations with online migrations from PostgreSQL to Azure Database for PostgreSQL
@@ -42,13 +41,22 @@ Known issues and limitations associated with online migrations from PostgreSQL t
 ## Size limitations
 
 - You can migrate up to 1 TB of data from PostgreSQL to Azure Database for PostgreSQL, using a single DMS service.
-- **pg_dump** command offers the ability to pick a few tables inside a database as a part of its dump operation. 
-```
-pg_dump -h hostname.postgres.com -U myusername -d database1 -t "\"public\".\"table_1\"" -t "\"public\".\"table_2\""
-```
-In the above example, the user has picked just the tables **table_1, table_2** under the **public** schema as a part the dump. 
+- DMS allows the users to pick tables inside a database that they want to migrate.
+:::image type="content" source="./media/known-issues-azure-postgresql-online/dms-table-selection-screen.png" alt-text="Screenshot of D M S screen that shows the option to pick tables."::: 
 
-A maximum of **8191** characters can be included as a part of the **pg_dump** command. In scenarios where the users wants to include many tables, care should be taken that the length of the **pg_dump** does not exceed this limit. If exceeded, the command will error out.
+Behind the scenes, there is a **pg_dump** command that is used to take the dump of the selected tables using one of the following options:
+ - **-T** to include the table names picked in the UI
+ - **-t** to exclude the table names not picked by the user
+ 
+There is a max limit of 7500 characters that can be included as part of the pg_dump command following the **-t** or **-T** option. The pg_dump command uses the count of the characters for selected or unselected tables , whichever is lower. If the count of characters for the selected and unselected tables exceed 7500, the pg_dump command fails with an error.
+
+For the previous example, the pg_dump command would be:
+
+```
+pg_dump -h hostname -u username -d databasename -T "\"public\".\"table_1\"" -T "\"public\".\"table_2\""
+```
+
+In the previous command, the number of characters is 55 (includes double quotes, spaces, -T and slash)
  
 ## Datatype limitations
 
@@ -89,6 +97,7 @@ When you try to perform an online migration from Amazon Web Service (AWS) Relati
 - The database name can't include a semicolon (;).
 - A captured table must have a primary key. If a table doesn't have a primary key, the result of DELETE and UPDATE record operations will be unpredictable.
 - Updating a primary key segment is ignored. Applying such an update will be identified by the target as an update that didn't update any rows. The result is a record written to the exceptions table.
+- If your table has a **JSON** column, any DELETE or UPDATE operations on this table can lead to a failed migration. 
 - Migration of multiple tables with the same name but a different case might cause unpredictable behavior and isn't supported. An example is the use of table1, TABLE1, and Table1.
 - Change processing of [CREATE | ALTER | DROP | TRUNCATE] table DDLs isn't supported.
 - In Database Migration Service, a single migration activity can only accommodate up to four databases.
